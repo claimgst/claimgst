@@ -4,9 +4,14 @@ class PostsController < ApplicationController
     render json: @posts
   end
 
+  def today
+    @posts = Post.where("DATE(date) = ?", Date.today)
+    render json: @posts
+  end
+
   def create
     @post = Post.new(post_params)
-    @post.date = DateTime.now
+    @post.date = Time.now
 
     if @post.save
       render json: @post, status: :created, location: @post
