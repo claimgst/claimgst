@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     get   '/', to: 'posts#index'
     post  '/', to: 'posts#create'
     get   '/today', to: 'posts#today'
+    get   '/search/:abn/:date', to: 'posts#search'
   end
 end

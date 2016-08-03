@@ -9,6 +9,11 @@ class PostsController < ApplicationController
     render json: @posts
   end
 
+  def search
+    @posts = Post.where(abn: params['abn']).where("DATE(date) = ?", params['date'])
+    render json: @posts
+  end
+
   def create
     @post = Post.new(post_params)
     @post.date = Time.now
