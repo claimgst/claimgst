@@ -37,3 +37,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Enable CORS
 gem 'rack-cors', :require => 'rack/cors'
+
+# Authentication
+gem 'devise'
