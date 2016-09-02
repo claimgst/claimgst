@@ -8,7 +8,11 @@ class Users::SessionsController < Devise::SessionsController
 
     if @user.valid_password?(params[:password])
       sign_in :user, @user
-      render json: @user, root: nil
+
+      hmac_secret = 'my$ecretK3y'
+      token = JWT.encode JSON.parse(@user.to_json), hmac_secret, 'HS256'
+
+      render json: token
     else
       invalid_login_attempt
     end

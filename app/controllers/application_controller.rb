@@ -19,17 +19,29 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_with_auth_token auth_token 
-    unless auth_token.include?(':')
+    unless auth_token.include?('.')
       authentication_error
       return
     end
 
-    user_id = auth_token.split(':').last
-    user = User.where(id: user_id).first
+    hmac_secret = 'my$ecretK3y'
+    decoded_token = JWT.decode auth_token, hmac_secret, true, { :algorithm => 'HS256' }
 
-    if user && Devise.secure_compare(user.access_token, auth_token)
-      # User can access
-      sign_in user, store: false
+    if decoded_token
+      # Build user object from token
+      auth_user_data = decoded_token.first
+      auth_user = User.new auth_user_data
+
+      # Build user object from DB
+      user = User.where(id: auth_user.user_id).first
+
+      # Then compare user object from token and DB
+      if user && Devise.secure_compare(user, auth_user)
+        # User can access
+        sign_in user, store: false
+      else
+        authentication_error
+      end
     else
       authentication_error
     end

@@ -43,3 +43,4 @@ gem 'rack-cors', :require => 'rack/cors'
 
 # Authentication
 gem 'devise'
+gem 'jwt'
