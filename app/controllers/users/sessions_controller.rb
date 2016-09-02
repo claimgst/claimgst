@@ -1,3 +1,5 @@
+require 'jwt'
+
 class Users::SessionsController < Devise::SessionsController
   skip_before_action :authenticate_user_from_token!
 
