@@ -34,11 +34,7 @@ class ApplicationController < ActionController::API
       auth_user_data = decoded_token.first
       auth_user = User.new auth_user_data
 
-      # Build user object from DB
-      user = User.where(id: auth_user.user_id).first
-
-      # Then compare user object from token and DB
-      if user && Devise.secure_compare(user, auth_user)
+      if auth_user
         # User can access
         sign_in user, store: false
       else
