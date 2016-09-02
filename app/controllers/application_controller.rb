@@ -11,8 +11,8 @@ class ApplicationController < ActionController::API
 
     if auth_token
       authenticate_with_auth_token auth_token
-    else
-      authentication_error
+    # else
+    #   authentication_error
     end
   end
 
