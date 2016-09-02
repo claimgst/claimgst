@@ -54,3 +54,8 @@ n_users.times do |i|
     user:    user
   )
 end
+
+user = User.first
+user.email = "spondbob@eamca.com"
+user.password = "123qwe"
+user.save
