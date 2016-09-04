@@ -26,10 +26,11 @@ class ApplicationController < ActionController::API
       return
     end
 
-    hmac_secret = 'my$ecretK3y'
-    decoded_token = JWT.decode auth_token, hmac_secret, true, { :algorithm => 'HS256' }
-
-    if decoded_token
+    begin
+      decoded_token = JWT.decode auth_token, nil, false
+    rescue JWT::VerificationError
+      authentication_error
+    else
       # Build user object from token
       auth_user_data = decoded_token.first
       auth_user = User.new auth_user_data
@@ -40,8 +41,6 @@ class ApplicationController < ActionController::API
       else
         authentication_error
       end
-    else
-      authentication_error
     end
   end
 
