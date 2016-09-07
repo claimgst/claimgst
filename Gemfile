@@ -28,6 +28,9 @@ group :development, :test do
   gem 'faker', require: false
 
   gem 'web-console'
+
+  # Enable CORS
+  gem 'rack-cors', :require => 'rack/cors'
 end
 
 group :development do
@@ -46,9 +49,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# Enable CORS
-gem 'rack-cors', :require => 'rack/cors'
 
 # Authentication
 gem 'devise'
